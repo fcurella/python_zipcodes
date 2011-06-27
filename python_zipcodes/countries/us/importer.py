@@ -1,6 +1,7 @@
 from csv import reader
 import pickle
 import httplib2
+from python_zipcodes.importers import GenericImporter
 
 class ImproperlyConfiguredError(Exception):
     pass
