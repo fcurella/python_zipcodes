@@ -7,8 +7,8 @@ class ImproperlyConfiguredError(Exception):
     pass
 
 class Importer(GenericImporter):
-        
     url = 'http://www.census.gov/tiger/tms/gazetteer/zips.txt'
+    country = 'us'
     
     def parse(self, content):
         rows = reader(content, delimiter=',', quotechar='"')
