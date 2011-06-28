@@ -51,7 +51,7 @@ class GenericImporter(object):
             pickle.dump(records, open(os.path.join(self.cache_dir,self.pickled), 'wb'))
         return records
 
-class ZipCode(object):
+class ZipCodes(object):
     def __init__(self, country, *args, **kwargs):
         module_name = 'python_zipcodes.countries.%s.importer' % country
         importer = __import__(module_name)
