@@ -42,7 +42,8 @@ class GenericImporter(object):
 
 
 class ZipCodeManager(object):
-    def __init__(self, storage=None, *args, **kwargs):
+    def __init__(self, storage=DummyStorage, *args, **kwargs):
+        self.storage = storage
         self.cache_codes = {}
 
     def get(self, country):
@@ -51,7 +52,7 @@ class ZipCodeManager(object):
         except KeyError:
             module_name = 'python_zipcodes.countries.%s.importer' % country.lower()
             importer = __import__(module_name, globals(), locals(), ['importer',], -1)
-            c = importer.Importer()
+            c = importer.Importer(storage=self.storage)
             zipcodes = c.zipcodes()
             self.cache_codes[country.lower()] = zipcodes 
             return zipcodes
