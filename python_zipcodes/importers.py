@@ -16,7 +16,10 @@ class GenericImporter(object):
         if self.country is None:
             raise ImproperlyConfiguredError
         self.cache_dir = os.path.join('python_zipcodes','countries', self.country)
-        self.storage = storage(importer=self)
+
+        storage_args = kwargs.get('storage_args', {})
+        storage_args.setdefault('importer', self)
+        self.storage = storage(**storage_args)
 
     def download(self):
         client = httplib2.Http()

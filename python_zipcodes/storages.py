@@ -86,3 +86,36 @@ class SqliteStorage(DummyStorage):
             c.execute('insert into zipcodes values (?,?,?)', [k, r['city'], r['state']])
         self.conn.commit()
         c.close()
+
+class DjangoStorage(DummyStorage):
+    def read(self):
+        zipcodes = ZipCode.objects.filter(country=self.importer.country)
+        zip_dict = {}
+        for z in zipcodes:
+            zip_dict[z.zipcode] = {'city':z.city, 'state':z.state}
+        return zip_dict
+
+    def save(self, zipcodes):
+        ZipCode.objects.all().delete()
+        for k, r in zip_codes.items():
+            ZipCode.objects.create(zipcode=k, city=r['city'], state=r['state'])
+
+class DjangoStorage(DummyStorage):
+    def __init__(self, *args, **kwargs):
+        super(DjangoStorage, self).__init__(*args, **kwargs)
+        try:
+            self.model = kwargs['model']
+        except KeyError:
+            raise ImproperlyConfiguredError
+
+    def read(self):
+        zipcodes = self.model.objects.filter(country=self.importer.country)
+        zip_dict = {}
+        for z in zipcodes:
+            zip_dict[z.zipcode] = {'city':z.city, 'state':z.state}
+        return zip_dict
+
+    def save(self, zipcodes):
+        self.model.objects.all().delete()
+        for k, r in zip_codes.items():
+            self.model.objects.create(zipcode=k, city=r['city'], state=r['state'])
