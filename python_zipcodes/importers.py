@@ -45,18 +45,42 @@ class GenericImporter(object):
 
 
 class ZipCodeManager(object):
-    def __init__(self, storage=DummyStorage, *args, **kwargs):
+    def __init__(self, storage=DummyStorage, storage_args={}, *args, **kwargs):
         self.storage = storage
+        self.storage_args = storage_args
         self.cache_codes = {}
+        self.importers = {}
+
+    def add(self, country):
+        country_name = country.lower()
+        module_name = 'python_zipcodes.countries.%s.importer' % country_name
+        importer = __import__(module_name, globals(), locals(), ['importer',], -1)
+        self.importers[country_name] = importer.Importer(storage=self.storage, storage_args=self.storage_args)
+
 
     def get(self, country):
+        country_name = country.lower()
         try:
-            return self.cache_codes[country.lower()]
+            return self.importers[country_name]
         except KeyError:
-            module_name = 'python_zipcodes.countries.%s.importer' % country.lower()
-            importer = __import__(module_name, globals(), locals(), ['importer',], -1)
-            c = importer.Importer(storage=self.storage)
-            zipcodes = c.zipcodes()
-            self.cache_codes[country.lower()] = zipcodes 
-            return zipcodes
+            self.add(country_name)
+            return self.get(country_name)
+    
+    def zipcodes(self, country):
+        country_name = country.lower()
+        try:
+            return self.importers[country_name].zipcodes()
+        except KeyError:
+            self.add(country_name)
+            return self.zipcodes(country_name)
+
+    def update(self, country):
+        country_name = country.lower()
+        try:
+            return self.importers[country_name].update()
+        except KeyError:
+            self.add(country_name)
+            return self.update(country_name)
+
+        
 
