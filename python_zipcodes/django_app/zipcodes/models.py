@@ -1,6 +1,4 @@
 from django.db import models
-from django.db.models.signals import post_syncdb
-from python_zipcodes.django_app.zipcodes.signals import save_zipcodes
 # Create your models here.
 class ZipCode(models.Model):
     """(ZipCode description)"""
@@ -15,4 +13,3 @@ class ZipCode(models.Model):
     def __unicode__(self):
         return u"%s: %s, %s - %s" % (self.zipcode, self.city, self.state, self.country,)
 
-post_syncdb.connect(save_zipcodes, sender=zipcodes.models)
