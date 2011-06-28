@@ -10,5 +10,3 @@ def save_zipcodes(sender, app, created_models, **kwargs):
         zc_manager.add(c)
         for zc, data in zc_manager.zipcodes(c).items():
             sender.ZipCode.objects.get_or_create(zipcode=zc, city=data['city'], state=data['state'], country=c)
-
-post_syncdb.connect(save_zipcodes, sender=zipcodes.models)
