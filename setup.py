@@ -9,16 +9,16 @@ requirements = ['httplib2',]
 
 setup(
     name = "python_zipcodes",
-    version = "0.0.1",
+    version = "0.0.2",
     description = "",
     long_description = read('README.rst'),
-    url = '',
+    url = 'https://github.com/fcurella/python_zipcodes',
     license = 'BSD',
     author = 'Flavio Curella',
     author_email = 'flavio.curella@curella.org',
     packages = find_packages(exclude=['tests']),
     classifiers = [
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
