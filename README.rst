@@ -10,8 +10,9 @@ Includes some precompiled zipcodes. Currently:
 Usage
 -----
 
-    >>> from python_zipcodes.importers import ZipCodes
-    >>> us_zipcodes = ZipCodes().get('US') # country code is case-insensitive 
+    >>> from python_zipcodes.importers import ZipCodeManager
+    >>> zc_manager = ZipCodeManager()
+    >>> us_zipcodes = zc_manager().get('US') # country code is case-insensitive. First call will take some time. 
     >>> us_zipcodes.has_key('66044')
     True
     >>> us_zipcodes['66044']
