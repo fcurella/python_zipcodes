@@ -16,5 +16,5 @@ Usage
     True
     >>> us_zipcodes['66044']
     ['Lawrence', 'KS']
-    >>> us_zipcodes.update() # downloads current version and caches it to disk
+    >>> us_zipcodes.update() # downloads current version, compiles and caches it to disk
     
