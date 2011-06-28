@@ -60,7 +60,6 @@ class GenericImporter(object):
             for r in c:
                 zipcodes[r['zipcode']] = {'city':r['city'], 'state':r['state']}
         except sqlite3.OperationalError:
-            print "rebuilding db"
             zipcodes = self.build_dict()
             c.execute("""drop table if exists zipcodes""")
             c.execute("""create table zipcodes
@@ -76,16 +75,6 @@ class GenericImporter(object):
         if not self.cached_data:
             self.cached_data = self.zipcodes()
         return self.cached_data[key]
-
-    def get(self, key):
-        sql = """SELECT * FROM zipcodes WHERE zipcode = ?"""
-        c = self.conn.cursor()
-        c.execute(sql, [key])
-        rows = list(c)
-        if len(rows):
-            return {'city': rows[0]['city'], 'state':rows[0]['state']}
-        return KeyError
-
 
 class ZipCodeManager(object):
     def __init__(self, *args, **kwargs):
