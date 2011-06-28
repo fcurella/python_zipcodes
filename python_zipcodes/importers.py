@@ -73,8 +73,16 @@ class ZipCodeManager(object):
         except KeyError:
             self.add(country_name)
             return self.zipcodes(country_name)
-
-    def update(self, country):
+    
+    def find(self, country, zipcode):
+        country_name = country.lower()
+        try:
+            return self.importers[country_name][zipcode]
+        except KeyError:
+            self.add(country_name)
+            return self.find(country_name, zipcode)
+        
+        def update(self, country):
         country_name = country.lower()
         try:
             return self.importers[country_name].update()
