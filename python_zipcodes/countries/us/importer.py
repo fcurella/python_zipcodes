@@ -14,5 +14,5 @@ class Importer(GenericImporter):
             zipcode = r[1]
             city = r[3].title()
             state = r[2].upper()
-            records.setdefault(zipcode, [city, state])
+            records.setdefault(zipcode, {'city':city, 'state':state})
         return records

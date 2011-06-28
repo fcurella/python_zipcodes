@@ -16,6 +16,6 @@ Usage
     >>> us_zipcodes.has_key('66044')
     True
     >>> us_zipcodes['66044']
-    ['Lawrence', 'KS']
+    {'city:'Lawrence', 'state':KS'}
     >>> us_zipcodes.update() # downloads current version, compiles and caches it to disk
     
