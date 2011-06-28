@@ -7,7 +7,7 @@ Usage
 -----
 
     >>> from python_zipcodes.importers import ZipCodes
-    >>> us_zipcodes = ZipCodes('us')
+    >>> us_zipcodes = ZipCodes('US') # country code is case-insensitive 
     >>> us_zipcodes.has_key('66044')
     True
     >>> us_zipcodes['66044']
