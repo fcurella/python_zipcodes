@@ -57,12 +57,12 @@ class ZipCodeManager(object):
 
     def get(self, country):
         try:
-            return self.cache_codes[country]
+            return self.cache_codes[country.lower()]
         except KeyError:
             module_name = 'python_zipcodes.countries.%s.importer' % country.lower()
             importer = __import__(module_name, globals(), locals(), ['importer',], -1)
             c = importer.Importer()
             zipcodes = c.zipcodes()
-            self.cache_codes[country] = zipcodes 
+            self.cache_codes[country.lower()] = zipcodes 
             return zipcodes
 
