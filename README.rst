@@ -12,10 +12,12 @@ Usage
 
     >>> from python_zipcodes.importers import ZipCodeManager
     >>> zc_manager = ZipCodeManager()
-    >>> us_zipcodes = zc_manager().zipcodes('US') # country code is case-insensitive. First call will take some time. 
-    >>> us_zipcodes.has_key('66044')
+    >>> zipcodes = zc_manager().zipcodes('US') # country code is case-insensitive. First call will take some time. 
+    >>> zipcodes['us'].has_key('66044')
     True
-    >>> us_zipcodes['66044']
+    >>> zipcodes['us']['66044']
+    {'city:'Lawrence', 'state':KS'}
+    >>> zipcodes.find('us','66044')
     {'city:'Lawrence', 'state':KS'}
     
 Using with Django::
@@ -28,8 +30,4 @@ API w/ Django::
     >>> from python_zipcodes.django_app.zipcodes.models import ZipCode
     >>> from python_zipcodes.storages import DjangoStorage
     >>> zc_manager = ZipCodeManager(storage=DjangoStorage, model=ZipCode)
-    >>> us_zipcodes = zc_manager().zipcodes('US') # country code is case-insensitive. First call will take some time. 
-    >>> us_zipcodes.has_key('66044')
-    True
-    >>> us_zipcodes['66044']
-    {'city:'Lawrence', 'state':KS'}
+    >>> zipcodes = zc_manager().zipcodes('US') # country code is case-insensitive. First call will take some time. 
