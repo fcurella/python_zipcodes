@@ -52,8 +52,9 @@ class GenericImporter(object):
         return records
 
 class ZipCodes(object):
-    def __init__(self, country, *args, **kwargs):
+    def get(self, country):
         module_name = 'python_zipcodes.countries.%s.importer' % country.lower()
-        importer = __import__(module_name)
+        importer = __import__(module_name, globals(), locals(), ['importer',], -1)
         c = importer.Importer()
         return c.zipcodes()
+
