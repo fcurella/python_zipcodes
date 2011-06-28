@@ -1,10 +1,8 @@
 import httplib2
 import os
 from StringIO import StringIO
-
-class ImproperlyConfiguredError(Exception):
-    pass
-
+from python_zipcodes.exceptions import ImproperlyConfiguredError
+from python_zipcodes.storages import DummyStorage
 
 class GenericImporter(object):
         
@@ -12,13 +10,13 @@ class GenericImporter(object):
     country = None
     txt = 'zipcodes.txt'
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, storage=DummyStorage, *args, **kwargs):
         if self.url is None:
             raise ImproperlyConfiguredError
         if self.country is None:
             raise ImproperlyConfiguredError
         self.cache_dir = os.path.join('python_zipcodes','countries', self.country)
-        self.cached_data = self.read()
+        self.storage = storage(importer=self)
 
     def download(self):
         client = httplib2.Http()
@@ -32,26 +30,19 @@ class GenericImporter(object):
         raise NotImplementedError
 
     def update(self):
-        self.cached_data = self.parse(self.download())
-
-    def read(self):
-        try:
-            content = open(os.path.join(self.cache_dir,self.txt), 'rb')
-        except IOError:
-            content = self.download()
-        content.seek(0)
-        return self.parse(content)
+        self.storage.update()
 
     def zipcodes(self):
-        return self.cached_data
+        return self.storage.cached_data
     
     def __getitem__(self, key):
-        if not self.cached_data:
-            self.cached_data = self.read()
-        return self.cached_data[key]
+        if not self.storage.cached_data:
+            self.storage.cached_data = self.storage.read()
+        return self.storage.cached_data[key]
+
 
 class ZipCodeManager(object):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, storage=None, *args, **kwargs):
         self.cache_codes = {}
 
     def get(self, country):
