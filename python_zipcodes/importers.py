@@ -85,7 +85,7 @@ class ZipCodeManager(object):
             self.add(country_name)
             return self.find(country_name, zipcode)
         
-        def update(self, country):
+    def update(self, country):
         country_name = country.lower()
         try:
             return self.importers[country_name].update()
