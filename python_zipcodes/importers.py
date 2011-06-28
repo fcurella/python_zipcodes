@@ -15,7 +15,7 @@ class GenericImporter(object):
             raise ImproperlyConfiguredError
         if self.country is None:
             raise ImproperlyConfiguredError
-        self.cache_dir = os.path.join('python_zipcodes','countries', self.country)
+        self.cache_dir = os.path.join(os.path.dirname(__file__),'countries', self.country)
 
         storage_args = kwargs.get('storage_args', {})
         storage_args.setdefault('importer', self)
