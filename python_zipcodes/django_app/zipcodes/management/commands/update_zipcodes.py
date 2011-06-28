@@ -4,7 +4,7 @@ from python_zipcodes.countries import country_list
 from python_zipcodes.importers import ZipCodeManager
 
 class Command(BaseCommand):
-    args = '
+    args = ''
     help = 'Updates the zip codes'
 
     def handle(self, *args, **options):
