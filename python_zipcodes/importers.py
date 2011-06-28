@@ -51,6 +51,9 @@ class ZipCodeManager(object):
         self.cache_codes = {}
         self.importers = {}
 
+    def __getitem__(self, key):
+        return self.importers[key]
+
     def add(self, country):
         country_name = country.lower()
         module_name = 'python_zipcodes.countries.%s.importer' % country_name
