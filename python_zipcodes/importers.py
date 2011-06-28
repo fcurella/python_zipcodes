@@ -51,7 +51,7 @@ class GenericImporter(object):
             pickle.dump(records, open(os.path.join(self.cache_dir,self.pickled), 'wb'))
         return records
 
-class ZipCodes(object):
+class ZipCodeManager(object):
     def __init__(self, *args, **kwargs):
         self.cache_codes = {}
 
