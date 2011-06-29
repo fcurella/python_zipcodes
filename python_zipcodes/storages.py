@@ -122,6 +122,6 @@ class DjangoStorage(DummyStorage):
             zip_dict[z.zipcode] = {'city':z.city, 'state':z.state}
         return zip_dict
     
-    def save(self, zipcodes):
+    def save(self, zip_codes):
         for k, r in zip_codes.items():
             self.model.objects.create(zipcode=k, city=r['city'], state=r['state'], country=self.importer.country)
