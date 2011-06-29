@@ -107,8 +107,8 @@ class SqliteStorage(DummyStorage):
 
 class DjangoStorage(DummyStorage):
     def __init__(self, *args, **kwargs):
-        super(DjangoStorage, self).__init__(*args, **kwargs)
         self.model = kwargs.get('model', ZipCode)
+        super(DjangoStorage, self).__init__(*args, **kwargs)
 
     def drop(self):
         self.model.objects.filter(country=self.importer.country).delete()
