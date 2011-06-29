@@ -36,12 +36,12 @@ class DummyStorage(object):
         """Opens the source file and converst it to a dict"""
         try:
             content = open(os.path.join(self.importer.cache_dir,self.importer.txt), 'rb')
-            content.close()
         except IOError:
             content = self.importer.download()
         content.seek(0)
         zip_codes = self.importer.parse(content)
         self.save(zip_codes)
+        content.close()
         return zip_codes
 
 
