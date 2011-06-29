@@ -21,6 +21,11 @@ class GenericImporter(object):
         storage_args.setdefault('importer', self)
         self.storage = storage(**storage_args)
 
+    def __getitem__(self, key):
+        if not self.storage.cached_data:
+            self.storage.cached_data = self.storage.read()
+        return self.storage.cached_data[key]
+
     def download(self):
         client = httplib2.Http()
         resp, content = client.request(self.url)
@@ -37,11 +42,6 @@ class GenericImporter(object):
 
     def zipcodes(self):
         return self.storage.cached_data
-    
-    def __getitem__(self, key):
-        if not self.storage.cached_data:
-            self.storage.cached_data = self.storage.read()
-        return self.storage.cached_data[key]
 
 
 class ZipCodeManager(object):
@@ -52,7 +52,8 @@ class ZipCodeManager(object):
         self.importers = {}
 
     def __getitem__(self, key):
-        return self.importers[key]
+        country_name = key.lower()
+        return self.importers[country_name]
 
     def add(self, country):
         country_name = country.lower()

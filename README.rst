@@ -12,7 +12,8 @@ Usage
 
     >>> from python_zipcodes.importers import ZipCodeManager
     >>> zc_manager = ZipCodeManager()
-    >>> zipcodes = zc_manager().zipcodes('US') # country code is case-insensitive. First call will take some time. 
+    >>> zc_manager.add('us') # country code is case-insensitive.
+    >>> zipcodes = zc_manager['us'].zipcodes()
     >>> zipcodes['us'].has_key('66044')
     True
     >>> zipcodes['us']['66044']
@@ -25,9 +26,13 @@ Using with Django::
     1. Add `python_zipcodes.django_app.zipcodes` to `INSTALLED_APPS`
     2. Run `sync_db`
 
+The App will expose a new model, `ZipCode`, composed of the following fields: `zipcode`, `country`,  `city`, `state`.
+
+The database will be populated at the first `syncdb`, so it will take some time.
+
 API w/ Django::
 
-    >>> from python_zipcodes.django_app.zipcodes.models import ZipCode
     >>> from python_zipcodes.storages import DjangoStorage
-    >>> zc_manager = ZipCodeManager(storage=DjangoStorage, model=ZipCode)
-    >>> zipcodes = zc_manager().zipcodes('US') # country code is case-insensitive. First call will take some time. 
+    >>> zc_manager = ZipCodeManager(storage=DjangoStorage)
+    >>> zc_manager.add('us') # country code is case-insensitive.
+    >>> zc_manager['us'].zipcodes()

@@ -3,7 +3,7 @@ from django.db import models
 class ZipCode(models.Model):
     """(ZipCode description)"""
     zipcode = models.CharField(blank=False, max_length=100)
-    country = models.CharField(blank=False, max_length=2)
+    country = models.CharField(blank=False, max_length=3)
     city = models.CharField(blank=False, max_length=255)
     state = models.CharField(blank=False, max_length=255)
 
