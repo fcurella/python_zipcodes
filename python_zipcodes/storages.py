@@ -23,6 +23,7 @@ class DummyStorage(object):
     def update(self):
         self.drop()
         self.cached_data = self.importer.parse(self.importer.download())
+        self.save()
 
     def read(self):
         """Reads data from the storage format"""
