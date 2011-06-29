@@ -5,5 +5,5 @@ def test_basics():
     manager = ZipCodeManager()
     zipcodes = manager.get('US')
     zipcode = '66044'
-    assert_true(zipcodes.has_key(zipcode))
-    assert_equal(zipcodes[zipcode], {'city':'Lawrence', 'state':'KS'})
+    assert_true(zipcodes['us'].has_key(zipcode))
+    assert_equal(zipcodes['us'][zipcode], {'city':'Lawrence', 'state':'KS'})
