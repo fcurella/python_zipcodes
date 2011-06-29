@@ -9,7 +9,7 @@ requirements = ['httplib2',]
 
 setup(
     name = "python_zipcodes",
-    version = "0.0.2",
+    version = "0.0.3",
     description = "",
     long_description = read('README.rst'),
     url = 'https://github.com/fcurella/python_zipcodes',
