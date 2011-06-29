@@ -36,3 +36,10 @@ API w/ Django::
     >>> zc_manager = ZipCodeManager(storage=DjangoStorage)
     >>> zc_manager.add('us') # country code is case-insensitive.
     >>> zc_manager['us'].zipcodes()
+    >>> zc_manager['us'].update() # downloads and saves to db. Takes some time.
+
+or you could just use the plain DummyStorage::
+
+    >>> zc_manager = ZipCodeManager()
+    >>> zc_manager.add('us')
+    >>> ZipCode.objects.get(state=zc_manager['us']['66044']['state'], country='us')
