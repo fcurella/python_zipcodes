@@ -87,7 +87,7 @@ class SqliteStorage(DummyStorage):
         # or we could just delete the file
         #os.remove(os.path.join(self.importer.cache_dir, self.db))
         c.close()
-        super(PickleStorage, self).drop()
+        super(SqliteStorage, self).drop()
 
     def read(self):
         c = self.conn.cursor()
@@ -112,7 +112,7 @@ class DjangoStorage(DummyStorage):
 
     def drop(self):
         self.model.objects.filter(country=self.importer.country).delete()
-        super(PickleStorage, self).drop()
+        super(DjangoStorage, self).drop()
 
     def read(self):
         zipcodes = self.model.objects.filter(country=self.importer.country)
