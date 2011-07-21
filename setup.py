@@ -13,7 +13,7 @@ setup(
     description = "",
     long_description = read('README.rst'),
     url = 'https://github.com/fcurella/python_zipcodes',
-    license = 'BSD',
+    license = 'MIT',
     author = 'Flavio Curella',
     author_email = 'flavio.curella@curella.org',
     packages = find_packages(exclude=['tests']),
